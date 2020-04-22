@@ -2,7 +2,6 @@ import {
   GET_PROJECTS,
   ADD_PROJECT,
   DELETE_PROJECT,
-  EDIT_PROJECT,
   PROJECTS_LOADING,
 } from "../actions/types";
 

@@ -18,10 +18,8 @@ mongoose.connect(db)
     })
     .catch(err => console.log(err))
 
-
 //Use routes
 app.use('/api/projects', projects)
-
 
 //Server static assets if in production
 
@@ -34,5 +32,4 @@ if(process.env.NODE_ENV === 'production'){
 }
 //Run server
 const port = process.env.PORT || 5000;
-console.log(port)
 app.listen(port, () => console.log(`Server Started on port ${port}`));

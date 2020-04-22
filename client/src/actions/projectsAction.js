@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_PROJECTS, ADD_PROJECT, DELETE_PROJECT, EDIT_PROJECT, PROJECTS_LOADING} from './types'
+import { GET_PROJECTS, ADD_PROJECT, DELETE_PROJECT, PROJECTS_LOADING} from './types'
 
 
 export const getProjects = () => dispatch => {

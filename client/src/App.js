@@ -1,27 +1,15 @@
-import React from 'react';
-import AppNavbar from './components/AppNavbar'
-import ProjectList from './components/ProjectList'
-import ProjectModal from './components/ProjectModal'
-import {Container} from 'reactstrap'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Main from "./components/Main";
+import { Provider } from "react-redux";
+import store from "./store";
 
-import {Provider} from 'react-redux'
-import store from './store'
-
-
-function App() {
-  return (
+const App = () => (
+  <div>
     <Provider store={store}>
-    <div className="App">
-      <AppNavbar/>
-      <Container>
-      <ProjectModal/>
-      <ProjectList/>
-      </Container>
-    </div>
+      <Main />
     </Provider>
-  );
-}
+  </div>
+);
 
 export default App;

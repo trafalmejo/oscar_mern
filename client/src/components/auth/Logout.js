@@ -1,0 +1,26 @@
+import React, { Component, Fragment } from "react";
+import { logout } from "../../actions/authActions";
+import { connect } from "react-redux";
+import { NavLink } from "reactstrap";
+import PropTypes from "prop-types";
+
+class Logout extends Component {
+  static propTypes = {
+    logout: PropTypes.func.isRequired,
+  };
+  render() {
+    return (
+      <a
+        className="dropdown-item"
+        href="#"
+        onClick={this.props.logout}
+        href="#"
+      >
+        <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+        Logout
+      </a>
+    );
+  }
+}
+
+export default connect(null, { logout })(Logout);

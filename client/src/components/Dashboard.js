@@ -173,19 +173,21 @@ class Dashboard extends Component {
             </nav>
 
             <div className="container-fluid">
-              <h1 class="h3 mb-2 text-gray-800">OSCAR</h1>
-              <p class="mb-4">
+              <h1 className="h3 mb-2 text-gray-800">OSCAR</h1>
+              <p className="mb-4">
                 OSCAR is a tool to create beautiful graphical user interaces
                 (GUIs) to send OSC messages and control interactive
                 installations (Modul8, MapMapper, Resolume arena, TouchDesigner,
                 Ableton Live, Processing, Pure Data, Unity, Unreal Engine, etc).
                 Let’s create beautiful, responsive and touchable interfaces.
               </p>
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">My Projects</h6>
+              <div className="card shadow mb-4">
+                <div className="card-header py-3">
+                  <h6 className="m-0 font-weight-bold text-primary">
+                    My Projects
+                  </h6>
                 </div>
-                <div class="card-body">
+                <div className="card-body">
                   <ProjectsTable />
                 </div>
               </div>

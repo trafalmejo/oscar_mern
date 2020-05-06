@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 var BSON = require("bson");
 const auth = require("../../middleware/auth");
+const authget = require("../../middleware/authget");
+
 //Project Model
 const OscarFile = require("../../models/OscarFile");
 const User = require("../../models/User");
@@ -9,7 +11,8 @@ const User = require("../../models/User");
 // @route POST request api/projects/all
 // @desc POST All projects of the user logged in
 // @access Public
-router.post("/all", auth, (req, res) => {
+router.get("/all", authget, (req, res) => {
+  console.log("ONE");
   let projects = [];
   let projectsIds = [];
   console.log("user in all/");
@@ -29,6 +32,13 @@ router.post("/all", auth, (req, res) => {
       });
     }
   });
+  //////
+  // OscarFile.find().then((file) => {
+  //   console.log(file);
+  //   //User exists
+  //   //res.send(400);
+  //   res.send(file);
+  // });
 });
 // @route POST request api/projects/name
 // @route post one project in order to load
@@ -39,8 +49,8 @@ router.post("/:name", auth, function (req, res) {
     if (file) {
       console.log(file);
       //User exists
-      res.send(400);
-      //res.send(file.content);
+      //res.send(400);
+      res.send(file.content);
     }
   });
 });

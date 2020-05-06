@@ -1,11 +1,12 @@
 require("dotenv/config");
 const jwt = require("jsonwebtoken");
 
-function auth(req, res, next) {
+function authget(req, res, next) {
   //const token = req.body.header("x-auth-token");
   console.log("TWO");
   console.log("headers in auth server middleware");
-  const token = req.body.headers["x_auth_token"];
+  console.log(req);
+  const token = req.headers["x_auth_token"];
   console.log(token);
   //console.log(req.headers);
   //Check for token
@@ -33,4 +34,4 @@ function auth(req, res, next) {
   }
 }
 
-module.exports = auth;
+module.exports = authget;

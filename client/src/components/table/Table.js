@@ -26,10 +26,14 @@ class ProjectsTable extends Component {
         alert("You click like action, row: " + "delete");
       },
     };
+    //console.log(window.localStorage.getItem("token"));
     // Jquery here $(...)...
     $("#projects-table").bootstrapTable({
-      url: "/api/projects",
-      height: 300,
+      url: "/api/projects/all",
+      method: "GET",
+      ajaxOptions: {
+        headers: { x_auth_token: window.localStorage.getItem("token") },
+      },
       columns: [
         {
           title: "Thumbnail",

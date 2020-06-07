@@ -4,6 +4,8 @@ import Login from "./Login";
 import Register from "./Register";
 import Dashboard from "./Dashboard";
 import ForgotPassword from "./ForgotPassword";
+import ResendConfirmation from "./ResendConfirmation";
+import ResetPassword from "./ResetPassword";
 
 const Main = () => (
   <main>
@@ -12,6 +14,9 @@ const Main = () => (
       <Route exact path="/register" component={Register} />
       <Route exact path="/dashboard" component={Dashboard} />
       <Route exact path="/forgotpassword" component={ForgotPassword} />
+      <Route exact path="/resend-confirmation" component={ResendConfirmation} />
+      <Route exact path="/reset-password/:token" component={ResetPassword} />
+      {/* <Route path="/api/auth/resetpassword/:token" component={ResetPassword} /> */}
     </Switch>
   </main>
 );

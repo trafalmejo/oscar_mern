@@ -7,6 +7,10 @@ import {
   LOGOUT_SUCCESS,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
+  RESEND_FAIL,
+  RESEND_SUCCESS,
+  PASSWORD_RESET_SUCCESS,
+  PASSWORD_RESET_FAIL,
 } from "../actions/types";
 
 const initialState = {

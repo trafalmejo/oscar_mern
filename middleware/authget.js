@@ -5,7 +5,7 @@ function authget(req, res, next) {
   //const token = req.body.header("x-auth-token");
   console.log("TWO");
   console.log("headers in auth server middleware");
-  console.log(req);
+  // console.log(req);
   const token = req.headers["x_auth_token"];
   console.log(token);
   //console.log(req.headers);
@@ -29,7 +29,7 @@ function authget(req, res, next) {
     next();
   } catch (e) {
     console.log("error: ");
-    console.log(e);
+    //console.log(e);
     res.status(400).json({ msg: "Request not valid" });
   }
 }

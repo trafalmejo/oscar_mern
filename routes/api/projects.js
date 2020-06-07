@@ -8,8 +8,8 @@ const authget = require("../../middleware/authget");
 const OscarFile = require("../../models/OscarFile");
 const User = require("../../models/User");
 
-// @route POST request api/projects/all
-// @desc POST All projects of the user logged in
+// @route GET request api/projects/all
+// @desc GET All projects of the user logged in
 // @access Public
 router.get("/all", authget, (req, res) => {
   console.log("ONE");
@@ -20,10 +20,39 @@ router.get("/all", authget, (req, res) => {
   User.findOne({ _id: req.user.id }).then((user) => {
     if (user) {
       //user exists
+      console.log("user requesting table exists");
       projectsIds = user.projects;
       //Obtain projects
       OscarFile.find({ _id: { $in: projectsIds } }).then((file) => {
         if (file) {
+          console.log("file exists");
+          //file exists
+          projects = file;
+          //send data
+          res.json(projects);
+        }
+      });
+    }
+  });
+});
+// @route POST request api/projects/all
+// @desc POST All projects of the user logged in
+// @access Public
+router.post("/all", auth, (req, res) => {
+  console.log("ONE");
+  let projects = [];
+  let projectsIds = [];
+  console.log("user in all/");
+  console.log(req.user);
+  User.findOne({ _id: req.user.id }).then((user) => {
+    if (user) {
+      //user exists
+      console.log("user requesting table exists");
+      projectsIds = user.projects;
+      //Obtain projects
+      OscarFile.find({ _id: { $in: projectsIds } }).then((file) => {
+        if (file) {
+          console.log("file exists");
           //file exists
           projects = file;
           //send data
@@ -47,6 +76,22 @@ router.post("/:name", auth, function (req, res) {
   //console.log(req.params.name);
   OscarFile.findOne({ name: req.params.name }).then((file) => {
     if (file) {
+      console.log(file);
+      //User exists
+      //res.send(400);
+      res.send(file.content);
+    }
+  });
+});
+
+// @route POST request api/projects/share/:id
+// @route post one project in order to from another user
+router.get("/share/:id", authget, function (req, res) {
+  //console.log("requesting one project");
+  //console.log(req.params.name);
+  console.log("requesting share");
+  OscarFile.findOne({ _id: req.params.id }).then((file) => {
+    if (file && file.visibility) {
       console.log(file);
       //User exists
       //res.send(400);
@@ -125,6 +170,61 @@ router.post("/", (req, res) => {
         });
       }
     });
+});
+// @route POST request api/projects/duplicate/:id
+// @desc Duplicate a Project
+// @access Private
+router.get("/duplicate/:id", authget, (req, res) => {
+  const author = req.user.id;
+  //FIND
+  OscarFile.findOne({ _id: req.params.id }).then((file) => {
+    if (file) {
+      console.log(file);
+      console.log("file exists");
+      //CREATE
+      User.findOne({ _id: author })
+        .populate({
+          //populates the projects schema with the project id that matches that name
+          path: "projects",
+          match: {
+            _id: req.params.id,
+          },
+        })
+        .exec(function (err, user) {
+          console.log(user);
+          if (err) {
+            return res.json({ error: err });
+          }
+          //Projects are not empty. User has at least one project that matches that name
+          if (user.projects.length > 0) {
+            const toCopy = user.projects[0];
+            const name = toCopy.name + "-Copy";
+            const content = toCopy.content;
+            const size = toCopy.size;
+            const visibility = toCopy.visibility;
+
+            //File with the same name exists
+            const newFile = new OscarFile({
+              name,
+              content,
+              size,
+              visibility,
+              author: user.email,
+            });
+            newFile.save(function (err, file) {
+              if (err) return res.json({ error: err });
+              user.projects.push(file._id);
+              user.save(function (err) {
+                if (err) return res.json({ error: err });
+                res.json({ msg: "Saved sucessfully" });
+              });
+            });
+          }
+        });
+    }
+  });
+
+  ///CREATE
 });
 
 // @route DELETE request api/projects/:id

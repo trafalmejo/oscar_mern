@@ -8,6 +8,10 @@ import {
   LOGOUT_SUCCESS,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
+  RESEND_SUCCESS,
+  RESEND_FAIL,
+  PASSWORD_RESET_SUCCESS,
+  PASSWORD_RESET_FAIL,
 } from "./types";
 import { returnErrors } from "./errorAction";
 
@@ -29,8 +33,6 @@ export const loadUser = () => (dispatch, getState) => {
       })
     )
     .catch((err) => {
-      console.log("cactched");
-      console.log(err);
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: AUTH_ERROR,
@@ -97,12 +99,12 @@ export const login = ({ email, password }) => (dispatch) => {
 
   axios
     .post("/api/auth", body, config)
-    .then((res) =>
+    .then((res) => {
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
-      })
-    )
+      });
+    })
     .catch((err) => {
       dispatch(
         returnErrors(err.response.data, err.response.status, "LOGIN_FAIL")
@@ -110,6 +112,9 @@ export const login = ({ email, password }) => (dispatch) => {
       dispatch({
         type: LOGIN_FAIL,
       });
+      if (err.response.status == 307) {
+        window.location.href = "/resend-confirmation";
+      }
     });
 };
 
@@ -118,4 +123,92 @@ export const logout = () => {
   return {
     type: LOGOUT_SUCCESS,
   };
+};
+
+export const resendConfirmation = ({ email }) => (dispatch) => {
+  //headers
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  //Request body
+  const body = JSON.stringify({ email });
+
+  axios
+    .post("/api/auth/resend", body, config)
+    .then((res) =>
+      dispatch({
+        type: RESEND_SUCCESS,
+        payload: res.data,
+      })
+    )
+    .catch((err) => {
+      dispatch(
+        returnErrors(err.response.data, err.response.status, "RESEND_FAIL")
+      );
+      dispatch({
+        type: RESEND_FAIL,
+      });
+    });
+};
+export const sendResetPasswordToken = ({ email }) => (dispatch) => {
+  //headers
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  //Request body
+  const body = JSON.stringify({ email });
+
+  axios
+    .post("/api/auth/recoverpassword", body, config)
+    .then((res) => {
+      dispatch(returnErrors(res.data.msg, res.request.status, "RESEND_SUCESS"));
+      dispatch({
+        type: RESEND_SUCCESS,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(
+        returnErrors(err.response.data, err.response.status, "RESEND_FAIL")
+      );
+      dispatch({
+        type: RESEND_FAIL,
+      });
+    });
+};
+export const resetPassword = ({ token, password }) => (dispatch) => {
+  console.log("passwordreset");
+  //headers
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  //Request body
+  const body = JSON.stringify({ token, password });
+
+  axios
+    .post("/api/auth/resetpassword", body, config)
+    .then((res) =>
+      dispatch({
+        type: PASSWORD_RESET_SUCCESS,
+        payload: res.data,
+      })
+    )
+    .catch((err) => {
+      dispatch(
+        returnErrors(
+          err.response.data,
+          err.response.status,
+          "PASSWORD_RESET_FAIL"
+        )
+      );
+      dispatch({
+        type: PASSWORD_RESET_FAIL,
+      });
+    });
 };

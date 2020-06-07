@@ -7,16 +7,22 @@ import ProjectList from "./ProjectList";
 import Logout from "./auth/Logout";
 import ProjectsTable from "./table/Table";
 import ProjectModal from "./ProjectModal";
-import { Container } from "reactstrap";
+// import { Container } from "reactstrap";
 import { Redirect } from "react-router";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 class Dashboard extends Component {
-  // componentDidMount() {
-  //   store.dispatch(loadUser());
-  // }
+  state = {
+    user: null,
+    msg: null,
+  };
+  componentDidMount() {
+    console.log("props");
+    console.log(this.props);
+  }
   static propTypes = {
+    user: PropTypes.object.isRequired,
     isAuthenticated: PropTypes.bool,
     error: PropTypes.object.isRequired,
   };
@@ -25,7 +31,7 @@ class Dashboard extends Component {
 
     return (
       <div className="App" id="wrapper">
-        <ul
+        {/* <ul
           className="navbar-nav bg-gradient-oscar sidebar sidebar-dark accordion"
           id="accordionSidebar"
         >
@@ -42,7 +48,7 @@ class Dashboard extends Component {
               <span>My Projects</span>
             </a>
           </li>
-        </ul>
+        </ul> */}
         <div id="content-wrapper" className="d-flex flex-column">
           <div id="content">
             <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -88,7 +94,7 @@ class Dashboard extends Component {
                   </div>
                 </li>
 
-                <li className="nav-item dropdown no-arrow mx-1">
+                {/* <li className="nav-item dropdown no-arrow mx-1">
                   <a
                     className="nav-link dropdown-toggle"
                     href="#"
@@ -135,7 +141,7 @@ class Dashboard extends Component {
                       Read More Messages
                     </a>
                   </div>
-                </li>
+                </li> */}
 
                 <div className="topbar-divider d-none d-sm-block"></div>
 
@@ -150,11 +156,11 @@ class Dashboard extends Component {
                     aria-expanded="false"
                   >
                     <span className="mr-2 d-none d-lg-inline text-gray-600 small">
-                      Daniel Castano
+                      {this.props.user.name}
                     </span>
                     <img
                       className="img-profile rounded-circle"
-                      src="https://source.unsplash.com/QAB-WJcbgJk/60x60"
+                      src="https://img.icons8.com/android/24/000000/user.png"
                     />
                   </a>
                   <div
@@ -210,6 +216,7 @@ class Dashboard extends Component {
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps, {})(Dashboard);

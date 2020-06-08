@@ -1,0 +1,5 @@
+MongoURI = 
+jwtSecret = 
+EMAIL_USERNAME = 
+EMAIL_PASSWORD = 
+CLIENT_ORIGIN = 

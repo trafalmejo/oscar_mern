@@ -27,7 +27,9 @@ class Login extends Component {
     const { error, isAuthenticated } = this.props;
     if (error !== prevProps.error) {
       //Check for register error
-      if (error.id === "GET_ERRORS") {
+      console.log(error);
+      if (error.id === "LOGIN_FAIL") {
+        console.log(error.msg.msg);
         this.setState({ msg: error.msg.msg });
       } else {
         this.setState({ msg: null });

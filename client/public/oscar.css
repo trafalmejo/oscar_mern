@@ -628,7 +628,10 @@ pre code {
 }
 
 .container-fluid {
-  width: 100%;
+  /* width: 100%; */
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
   padding-right: 0.75rem;
   padding-left: 0.75rem;
   margin-right: auto;
@@ -3331,7 +3334,7 @@ input[type="button"].btn-block {
 .dropdown-item:active {
   color: #fff;
   text-decoration: none;
-  background-color: #4e73df;
+  background-color: var(--oscar);
 }
 
 .dropdown-item.disabled,
@@ -4662,6 +4665,8 @@ input[type="button"].btn-block {
   margin-bottom: 0;
   background-color: #f8f9fc;
   border-bottom: 1px solid #e3e6f0;
+  display: flex;
+  flex-direction: column;
 }
 
 .card-header:first-child {
@@ -10993,19 +10998,19 @@ a:focus {
 }
 
 .bg-login-image {
-  background: url("https://github.com/trafalmejo/OSCAR/raw/master/assets/css/thumbnail.png");
+  background: url("images/oscar-square.png");
   background-position: center;
   background-size: cover;
 }
 
 .bg-register-image {
-  background: url("https://github.com/trafalmejo/OSCAR/raw/master/assets/css/thumbnail.png");
+  background: url("images/oscar-square.png");
   background-position: center;
   background-size: cover;
 }
 
 .bg-password-image {
-  background: url("https://github.com/trafalmejo/OSCAR/raw/master/assets/css/thumbnail.png");
+  background: url("images/oscar-square.png");
   background-position: center;
   background-size: cover;
 }
@@ -11412,4 +11417,9 @@ footer.sticky-footer .copyright {
 
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
+}
+
+.logo-dashboard {
+  max-width: 100px;
+  margin: auto;
 }

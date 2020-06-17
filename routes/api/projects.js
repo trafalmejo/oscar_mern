@@ -12,10 +12,8 @@ const User = require("../../models/User");
 // @desc GET All projects of the user logged in
 // @access Public
 router.get("/all", authget, (req, res) => {
-  console.log("ONE");
   let projects = [];
   let projectsIds = [];
-  console.log("user in all/");
   console.log(req.user);
   User.findOne({ _id: req.user.id }).then((user) => {
     if (user) {
@@ -69,14 +67,19 @@ router.post("/all", auth, (req, res) => {
   //   res.send(file);
   // });
 });
-// @route POST request api/projects/name
+// @route POST request api/projects/id
 // @route post one project in order to load
-router.post("/:name", auth, function (req, res) {
-  //console.log("requesting one project");
+router.post("/:id", auth, function (req, res) {
+  console.log("requesting one project");
+  if (!req.params.id) {
+    res.status(404).json({
+      msg: "Project not found",
+    });
+  }
   //console.log(req.params.name);
-  OscarFile.findOne({ name: req.params.name }).then((file) => {
+  OscarFile.findOne({ _id: req.params.id }).then((file) => {
     if (file) {
-      console.log(file);
+      //console.log(file);
       //User exists
       //res.send(400);
       res.send(file.content);
@@ -230,7 +233,7 @@ router.get("/duplicate/:id", authget, (req, res) => {
 // @route DELETE request api/projects/:id
 // @desc Delete a Project
 // @access Private
-router.delete("/:id", (req, res) => {
+router.delete("/:id", auth, (req, res) => {
   console.log("requesting server to delete");
   console.log(req.params.id);
 

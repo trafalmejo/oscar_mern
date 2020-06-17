@@ -233,7 +233,7 @@ router.get("/duplicate/:id", authget, (req, res) => {
 // @route DELETE request api/projects/:id
 // @desc Delete a Project
 // @access Private
-router.delete("/:id", auth, (req, res) => {
+router.delete("/:id", (req, res) => {
   console.log("requesting server to delete");
   console.log(req.params.id);
 

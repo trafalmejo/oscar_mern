@@ -69,7 +69,7 @@ router.post("/all", auth, (req, res) => {
 });
 // @route POST request api/projects/id
 // @route post one project in order to load
-router.post("/:id", auth, function (req, res) {
+router.post("/:id", function (req, res) {
   console.log("requesting one project");
   if (!req.params.id) {
     res.status(404).json({

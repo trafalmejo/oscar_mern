@@ -84,7 +84,7 @@ router.post("/:id", function (req, res) {
       //res.send(400);
       res.send(file.content);
     } else {
-      res.json({ msg: "Not found" });
+      res.status(404).json({ msg: "Not found" });
     }
   });
 });

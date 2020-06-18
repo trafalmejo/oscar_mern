@@ -182,7 +182,7 @@ router.get("/duplicate/:id", authget, (req, res) => {
   //FIND
   OscarFile.findOne({ _id: req.params.id }).then((file) => {
     if (file) {
-      console.log(file);
+      //console.log(file);
       console.log("file exists");
       //CREATE
       User.findOne({ _id: author })
@@ -233,7 +233,7 @@ router.get("/duplicate/:id", authget, (req, res) => {
 // @route DELETE request api/projects/:id
 // @desc Delete a Project
 // @access Private
-router.delete("/:id", (req, res) => {
+router.delete("/:id", authget, (req, res) => {
   console.log("requesting server to delete");
   console.log(req.params.id);
 

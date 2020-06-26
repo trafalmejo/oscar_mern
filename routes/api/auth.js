@@ -267,7 +267,11 @@ router.post("/recoverpassword", (req, res) => {
           };
           transporter.sendMail(mailOptions, function (err) {
             if (err) {
-              return res.status(500).json({ msg: err.message });
+              return res.status(200).json({
+                msg:
+                  "Ups. There was an error sending the email. Please try later",
+              });
+              //return res.status(500).json({ msg: err.message });
             }
             console.log("reset answer");
             res.status(200).json({
@@ -339,17 +343,19 @@ router.post("/resetpassword", (req, res) => {
             if (err) {
               return res.status(500).json({ msg: err.message });
             }
-
-            return res.redirect(
-              process.env.CLIENT_ORIGIN +
-                "/?msg=" +
-                "Your password has been changed!"
-            );
+            console.log("email sent");
+            return res
+              .status(401)
+              .json({ msg: "You password has been changed" });
+            // console.log(process.env.CLIENT_ORIGIN);
+            // var string = encodeURIComponent("You password has been changed");
+            // return res.redirect(process.env.CLIENT_ORIGIN + "/?msg=" + string);
           });
         });
       });
       if (err) {
-        return res.status(401).json({ msg: err });
+        console.log(err);
+        return res.status(401).json({ msg: "Try again later" });
       }
     });
   });

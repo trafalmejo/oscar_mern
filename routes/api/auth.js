@@ -227,7 +227,7 @@ router.post("/recoverpassword", (req, res) => {
   User.findOne({ email: req.body.email })
     .then((user) => {
       if (!user)
-        return res.status(401).json({
+        return res.status(200).json({
           msg:
             "The email address " +
             req.body.email +

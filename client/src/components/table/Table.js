@@ -26,6 +26,25 @@ class ProjectsTable extends Component {
       "</a>",
     ].join("");
   }
+  dateFormatter(value, row, index) {
+    let html = [];
+    let date = new Date(value);
+    var formatted =
+      date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+    " " + date.getHours() + ":" + date.getMinutes() + "";
+    html.push(formatted);
+
+    return html.join("");
+  }
+  byteFormatter(bytes, row, index) {
+    let html = [];
+    var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+    if (bytes == 0) return "0 Byte";
+    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+    var size = Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
+    html.push(size);
+    return html.join("");
+  }
   deleteProject = () => {
     console.log("i am here");
   };
@@ -166,11 +185,13 @@ class ProjectsTable extends Component {
           title: "Size",
           field: "size",
           sortable: true,
+          formatter: this.byteFormatter,
         },
         {
           title: "Date",
           field: "date",
           sortable: true,
+          formatter: this.dateFormatter,
         },
         {
           title: "Actions",

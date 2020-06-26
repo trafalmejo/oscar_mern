@@ -172,8 +172,10 @@ router.post("/resend", (req, res) => {
         from: process.env.EMAIL_USERNAME,
         to: user.email,
         subject: "Account Verification Token",
+        html:
+          '<img src="https://account.createwithoscar.com/images/oscar-circle.png"/>',
         text:
-          "Hello,\n\n" +
+          `Hello, ${user.name}\n\n` +
           "Please verify your account by click in the link: \nhttp://" +
           req.headers.host +
           "/api/auth/confirmation/" +
@@ -257,8 +259,10 @@ router.post("/recoverpassword", (req, res) => {
             from: process.env.EMAIL_USERNAME,
             to: user.email,
             subject: "Reset Password",
+            html:
+              '<img src="https://account.createwithoscar.com/images/oscar-circle.png"/>',
             text:
-              "Hello,\n\n" +
+              `Hello,${user.name}\n\n` +
               "Please reset your password at the following link: \nhttp://" +
               req.headers.host +
               "/api/auth/resetpassword/" +
@@ -331,6 +335,8 @@ router.post("/resetpassword", (req, res) => {
             from: process.env.EMAIL_USERNAME,
             to: user.email,
             subject: "Your password has been changed",
+            html:
+              '<img src="https://account.createwithoscar.com/images/oscar-circle.png"/>',
             text:
               `Hello, ${user.name}\n\n` +
               `This is a confirmation that the password for your account ${user.email} has just been changed.\n`,

@@ -31,7 +31,6 @@ class ProjectsTable extends Component {
     let date = new Date(value);
     var formatted =
       date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
-    " " + date.getHours() + ":" + date.getMinutes() + "";
     html.push(formatted);
 
     return html.join("");

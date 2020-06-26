@@ -339,9 +339,12 @@ router.post("/resetpassword", (req, res) => {
             if (err) {
               return res.status(500).json({ msg: err.message });
             }
-            return res
-              .status(401)
-              .json({ msg: "Your password has been changed!" });
+
+            return res.redirect(
+              process.env.CLIENT_ORIGIN +
+                "/?msg=" +
+                "Your password has been changed!"
+            );
           });
         });
       });

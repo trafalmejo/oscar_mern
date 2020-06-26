@@ -172,8 +172,6 @@ router.post("/resend", (req, res) => {
         from: process.env.EMAIL_USERNAME,
         to: user.email,
         subject: "Account Verification Token",
-        html:
-          '<img src="https://account.createwithoscar.com/images/oscar-circle.png"/>',
         text:
           `Hello, ${user.name}\n\n` +
           "Please verify your account by click in the link: \nhttp://" +
@@ -259,8 +257,6 @@ router.post("/recoverpassword", (req, res) => {
             from: process.env.EMAIL_USERNAME,
             to: user.email,
             subject: "Reset Password",
-            html:
-              '<img src="https://account.createwithoscar.com/images/oscar-circle.png"/>',
             text:
               `Hello,${user.name}\n\n` +
               "Please reset your password at the following link: \nhttp://" +
@@ -335,8 +331,6 @@ router.post("/resetpassword", (req, res) => {
             from: process.env.EMAIL_USERNAME,
             to: user.email,
             subject: "Your password has been changed",
-            html:
-              '<img src="https://account.createwithoscar.com/images/oscar-circle.png"/>',
             text:
               `Hello, ${user.name}\n\n` +
               `This is a confirmation that the password for your account ${user.email} has just been changed.\n`,
@@ -345,9 +339,9 @@ router.post("/resetpassword", (req, res) => {
             if (err) {
               return res.status(500).json({ msg: err.message });
             }
-            res
-              .status(200)
-              .json("Your password has been updated: " + user.email + ".");
+            return res
+              .status(401)
+              .json({ msg: "Your password has been changed!" });
           });
         });
       });
